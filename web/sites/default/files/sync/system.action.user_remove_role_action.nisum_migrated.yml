@@ -1,0 +1,14 @@
+uuid: 13ae69e9-5115-474a-a62e-5fc830ad1fde
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.nisum_migrated
+  module:
+    - user
+id: user_remove_role_action.nisum_migrated
+label: 'Remove the Nisum Migrated role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: nisum_migrated

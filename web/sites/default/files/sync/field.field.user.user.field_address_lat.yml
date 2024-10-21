@@ -1,0 +1,20 @@
+uuid: 319435d8-efce-4f12-9f82-1de7b9d5a581
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address_lat
+  module:
+    - user
+id: user.user.field_address_lat
+field_name: field_address_lat
+entity_type: user
+bundle: user
+label: 'Address Lat'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

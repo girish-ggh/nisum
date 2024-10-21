@@ -1,0 +1,21 @@
+uuid: b6a56c59-9d59-4794-adfb-960b81abcd1e
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_address_street
+field_name: field_address_street
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

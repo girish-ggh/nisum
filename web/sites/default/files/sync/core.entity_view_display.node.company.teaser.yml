@@ -1,0 +1,34 @@
+uuid: 9f623324-b4b3-4e8b-b01c-0cc27fadd212
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.company.body
+    - field.field.node.company.field_catchphrase
+    - field.field.node.company.field_description
+    - node.type.company
+  module:
+    - text
+    - user
+id: node.company.teaser
+targetEntityType: node
+bundle: company
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_catchphrase: true
+  field_description: true

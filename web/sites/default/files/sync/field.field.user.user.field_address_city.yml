@@ -1,0 +1,20 @@
+uuid: de451f6e-edb7-4306-9853-8dd437dfb1bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address_city
+  module:
+    - user
+id: user.user.field_address_city
+field_name: field_address_city
+entity_type: user
+bundle: user
+label: 'Address City'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

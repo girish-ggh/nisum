@@ -1,0 +1,20 @@
+uuid: 1ced43f6-1946-4ee9-948e-5da2c09c5894
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address_lng
+  module:
+    - user
+id: user.user.field_address_lng
+field_name: field_address_lng
+entity_type: user
+bundle: user
+label: 'Address Lng'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
