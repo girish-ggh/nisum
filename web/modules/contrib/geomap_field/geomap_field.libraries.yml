@@ -1,0 +1,16 @@
+geomap_default_widget:
+  version: VERSION
+  css:
+    theme:
+      css/geomap_default_widget.css: {}
+  js:
+    js/geomap-default-widget.js: {weight: -1}
+  dependencies:
+    - map_provider/map
+
+geomap_default_formatter:
+  version: VERSION
+  js:
+    js/geomap-default-formatter.js: {weight: -1}
+  dependencies:
+    - map_provider/map

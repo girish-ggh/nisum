@@ -1,0 +1,12 @@
+name: 'Geolocation Provider'
+type: module
+description: 'Geolocation provider manager. Allow developers to use and define multiple geolocation providers using the Drupal 8 Plugin API.'
+core_version_requirement: ^8 || ^9 || ^10
+package: 'Other'
+dependencies:
+  - drupal:serialization
+
+# Information added by Drupal.org packaging script on 2024-05-02
+version: '1.0.3'
+project: 'geolocation_provider'
+datestamp: 1714636708

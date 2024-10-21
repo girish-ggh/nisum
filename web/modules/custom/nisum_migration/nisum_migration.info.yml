@@ -1,0 +1,11 @@
+name: 'Nisum Migration'
+type: module
+description: 'Migrate users and companies from a JSON source to Drupal.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:migrate
+  - drupal:migrate_plus
+  - drupal:migrate_tools
+  - drupal:node
+  - drupal:user

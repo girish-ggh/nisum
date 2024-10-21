@@ -1,0 +1,14 @@
+name: 'Geomap Field'
+type: module
+description: 'Provide a new field type to store address (using geolocation and map visualisation). Also provide a field formatter to display the field as a map.'
+core_version_requirement: ^8 || ^9 || ^10
+package: 'Field types'
+dependencies:
+  - drupal:field
+  - geolocation_provider
+  - map_provider
+
+# Information added by Drupal.org packaging script on 2024-05-02
+version: '1.0.2'
+project: 'geomap_field'
+datestamp: 1714641747

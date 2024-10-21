@@ -1,0 +1,7 @@
+services:
+  plugin.manager.yaml_map_provider:
+    class: Drupal\map_provider\YamlMapProviderManager
+    arguments: ['@module_handler', '@cache.discovery']
+  plugin.manager.map_provider:
+    class: Drupal\map_provider\Plugin\MapProviderManager
+    parent: default_plugin_manager

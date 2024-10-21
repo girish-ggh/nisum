@@ -1,0 +1,60 @@
+id: migrate_companies
+label: 'Migrate Companies from JSON'
+# This migration pulls company data from a JSON source.
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  # The URL to fetch data from.
+  urls:
+    - https://jsonplaceholder.typicode.com/users
+  fields:
+    - name: comp_id
+      label: "User Id"
+      # Selector for the unique identifier of the company.
+      selector: id
+    - name: company_details
+      label: "Comp Details"
+      # Selector for the nested object containing company details.
+      selector: company
+  # The unique identifier for this migration.
+  ids:
+    comp_id:
+      type: string
+  
+process:
+  # Set the type of the entity being created.
+  type:
+    plugin: default_value
+    default_value: company
+  # Set the user ID associated with the company node.
+  uid:
+    plugin: default_value
+    default_value: 1
+  # Extract the company name from the nested company_details.
+  title: 
+    plugin: extract
+    source: company_details
+    index:
+      - name
+  # Extract the company catchphrase.
+  field_catchphrase: 
+    plugin: extract
+    source: company_details
+    index:
+      - catchPhrase
+  # Extract the company description.
+  field_description: 
+    plugin: extract
+    source: company_details
+    index:
+      - bs
+
+# Destination configuration specifies the entity type and bundle.
+destination:
+  plugin: entity:node
+  bundle: company
+
+# Migration dependencies are specified here.
+migration_dependencies: {}

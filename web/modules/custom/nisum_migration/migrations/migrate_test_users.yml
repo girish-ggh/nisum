@@ -1,0 +1,125 @@
+id: migrate_users
+label: 'Migrate Users from JSON'
+# This migration pulls user data from a JSON source.
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  # The URL to fetch user data from.
+  urls:
+    - https://jsonplaceholder.typicode.com/users
+  fields:
+    - name: userid
+      label: 'User ID'
+      # Selector for the unique identifier of the user.
+      selector: id
+    - name: field_full_name
+      label: 'Full Name'
+      # Selector for the user's full name.
+      selector: name
+    - name: username
+      label: 'Username'
+      # Selector for the user's username.
+      selector: username
+    - name: email
+      label: 'Email'
+      # Selector for the user's email address.
+      selector: email
+    - name: field_phone
+      label: 'Phone Number'
+      # Selector for the user's phone number.
+      selector: phone
+    - name: field_website
+      label: 'Website'
+      # Selector for the user's website.
+      selector: website
+    - name: company_details
+      label: "Comp Details"
+      # Selector for the nested object containing company details.
+      selector: company
+    - name: add_details
+      label: "Add Details"
+      # Selector for the nested address object.
+      selector: address 
+    - name: add_geo_details
+      label: "Add Geo Details"
+      # Selector for the nested geo object within the address.
+      selector: address/geo  
+  # The unique identifier for this migration.
+  ids:
+    userid:
+      type: integer
+
+process:
+  # Mapping source fields to user entity fields.
+  name: username
+  mail: email
+  pass: "user_password" # Optionally, set a default password for all users.
+  roles:
+    plugin: default_value
+    default_value:
+      - authenticated
+      - nisum_migrated
+  status:
+    plugin: default_value
+    default_value: 1
+  field_phone: field_phone
+  field_website: field_website
+  field_full_name: field_full_name
+  # Extract address components from the nested address details.
+  field_address_suite: 
+    plugin: extract
+    source: add_details
+    index:
+      - suite
+  field_address_street: 
+    plugin: extract
+    source: add_details
+    index:
+      - street
+  field_address_city: 
+    plugin: extract
+    source: add_details
+    index:
+      - city
+  field_address_zipcode: 
+    plugin: extract
+    source: add_details
+    index:
+      - zipcode
+  # Extract latitude and longitude from geo details.
+  field_address_lat: 
+    plugin: extract
+    source: add_geo_details
+    index:
+      - lat
+  field_address_lng: 
+    plugin: extract
+    source: add_geo_details
+    index:
+      - lng
+  # Extract company name from company details.
+  field_user_company: 
+    plugin: extract
+    source: company_details
+    index:
+      - name
+  # Lookup the company node based on the company name.
+  field_company:
+    plugin: entity_lookup
+    entity_type: node
+    bundle: company
+    source: company_details
+    index:
+      - name
+    value_key: title
+
+# Destination configuration specifies the entity type and bundle.
+destination:
+  plugin: entity:user
+
+# Migration dependencies are specified here.
+migration_dependencies:
+  required:
+    - migrate_companies

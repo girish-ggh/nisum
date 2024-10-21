@@ -1,0 +1,19 @@
+map:
+  version: VERSION
+  js:
+    js/map.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - map_provider/leaflet
+    - core/once
+
+leaflet:
+  css:
+    theme:
+      /libraries/leaflet/dist/leaflet.css: {}
+  js:
+    /libraries/leaflet/dist/leaflet.js: {}
+  dependencies:
+    - core/jquery
+

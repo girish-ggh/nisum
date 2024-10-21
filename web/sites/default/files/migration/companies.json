@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Test Company",
+    "catchPhrase": "Test Catchphrase",
+    "bs": "Test Business Description"
+  },
+  {
+    "id": 2,
+    "name": "Another Company",
+    "catchPhrase": "Another Catchphrase",
+    "bs": "Another Business Description"
+  }
+]
+

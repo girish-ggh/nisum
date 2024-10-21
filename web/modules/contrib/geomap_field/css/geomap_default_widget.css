@@ -1,0 +1,82 @@
+.geomap-widget-wrapper {
+  display: flex;
+}
+
+.geomap-widget-wrapper > div {
+  flex: 1;
+}
+
+.geomap-widget-fields-wrapper {
+  padding-right: 1.5em;
+}
+
+.geomap-widget-fields-wrapper input[type="text"] {
+  width: 100%;
+}
+
+.geomap-widget-map-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.geomap-widget-map {
+  height: 100%;
+  width: 100%;
+}
+
+.geolocation-suggestions-list {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 11px;
+  bottom: 11px;
+  z-index: 1000;
+}
+
+.geolocation-suggestions-list-item {
+  list-style: none;
+}
+
+.geolocation-suggestions-list-item button {
+  padding: 8px 16px;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.geolocation-suggestions-list-item button:after {
+  content: url(../images/baseline-reply-24px.svg);
+  padding-left: 8px;
+}
+
+.geolocation-suggestions-list-item button:hover {
+  background-color: #f4f4f4;
+}
+
+.geomap-loader {
+  width: 42px;
+  height: 42px;
+  border: 8px solid transparent;
+  border-top: 8px solid #1f86c7;
+  border-radius: 50%;
+  animation: geomap-loader-spin 1s linear infinite;
+  position: absolute;
+  z-index: 1000;
+  top: 16px;
+  right: 16px;
+}
+
+.geomap-loader[aria-hidden="true"] {
+  display: none;
+}
+
+@keyframes geomap-loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

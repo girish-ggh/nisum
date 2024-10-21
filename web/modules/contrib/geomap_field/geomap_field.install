@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Install/update geomap_field module.
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_update_N().
+ */
+function geomap_field_update_8001(&$sandbox) {
+  $schema = Database::getConnection()->schema();
+  $spec = [
+    'type' => 'varchar',
+    'length' => 255,
+  ];
+  /** @var \Drupal\field\Entity\FieldStorageConfig[] $geomap_field_storages */
+  $geomap_field_storages = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->loadByProperties(['type' => 'geomap']);
+  foreach ($geomap_field_storages as $geomap_field_storage) {
+    $field_name = $geomap_field_storage->getName();
+    $entity_type = $geomap_field_storage->getTargetEntityTypeId();
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+    $schema->addField($entity_type . "__$field_name", $field_name . '_address_name', $spec);
+    if (method_exists($storage, 'getRevisionTable')) {
+      $revision_table = $storage->getRevisionTable();
+      $schema->addField($revision_table . "__$field_name", $field_name . '_address_name', $spec);
+    }
+  }
+  Drupal::messenger()
+    ->addStatus('Module geomap_field Update # 8001 () was executed successfully.');
+}
