@@ -1,0 +1,20 @@
+uuid: 1ec2977c-d066-4e02-87e2-db921fd3950a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address_zipcode
+  module:
+    - user
+id: user.user.field_address_zipcode
+field_name: field_address_zipcode
+entity_type: user
+bundle: user
+label: 'Address Zipcode'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

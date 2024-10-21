@@ -868,3 +868,4 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
 
 $config['migrate_plus.migration.migrate_companies']['source']['debug'] = TRUE;
 $config['system.logging']['error_level'] = 'verbose';
+$settings['config_sync_directory'] = $app_root . '/config';

@@ -1,0 +1,14 @@
+uuid: 46ba1d4c-8230-4e7e-8140-3017034275b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.nisum_migrated
+  module:
+    - user
+id: user_add_role_action.nisum_migrated
+label: 'Add the Nisum Migrated role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: nisum_migrated

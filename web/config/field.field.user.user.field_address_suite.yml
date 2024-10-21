@@ -1,0 +1,20 @@
+uuid: a06c2011-cd60-40c7-90f7-a6f99d213220
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_address_suite
+  module:
+    - user
+id: user.user.field_address_suite
+field_name: field_address_suite
+entity_type: user
+bundle: user
+label: 'Address Suite'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
