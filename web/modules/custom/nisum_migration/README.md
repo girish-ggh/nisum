@@ -268,6 +268,19 @@ To execute the migrations defined in the `nisum_migration` module, follow these 
    ```
 4. Monitor the output for success or error messages indicating the status of each migration.
 
+## Rollback Migration
+
+To rollback the migrations, follow these steps:
+1. **Rollback Users**:
+
+   ```bash
+   drush mr migrate_users
+   ```
+2. **Rollback Companies**:
+
+   ```bash
+   drush mr migrate_companies
+   ```
    
 ## Conclusion
 
