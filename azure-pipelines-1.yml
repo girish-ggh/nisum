@@ -9,12 +9,18 @@ pool:
 variables:
   AZURE_WEBAPP_NAME: 'Nisum'          # The name of your Azure Web App
   AZURE_RESOURCE_GROUP: 'Drupal'   # Your Resource Group
-  AZURE_SERVICE_CONNECTION: 'AzureConnection' # Your Service Connection
+  AZURE_SERVICE_CONNECTION: 'NisumAzureConnection' # Your Service Connection
 
 steps:
-  - task: UsePHPVersion@0
-    inputs:
-      version: '8.3'
+  - script: |
+      echo "Installing PHP 8.3..."
+      sudo apt-get update
+      sudo apt-get install -y php8.3 php8.3-cli php8.3-mbstring php8.3-xml
+    displayName: 'Install PHP 8.3'
+
+  - script: |
+      php --version
+    displayName: 'Check PHP Version'
 
   - task: DownloadPipelineArtifact@2
     inputs:
