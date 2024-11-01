@@ -24,7 +24,7 @@ steps:
       php --version
     displayName: 'Check PHP Version'
 
-  # Install Composer dependencies
+  # Install Composer dependencies and create artifact
   - task: Bash@3
     inputs:
       targetType: 'inline'
@@ -32,7 +32,8 @@ steps:
         mkdir -p drop  # Create a directory for the artifact
         echo "Installing Composer dependencies..."
         composer install --no-interaction --prefer-dist --optimize-autoloader
-    displayName: 'Install Composer Dependencies'
+        cp -r * drop/  # Copy all project files to the drop directory for deployment
+    displayName: 'Install Composer Dependencies and Prepare Artifact'
 
   # Publish the `drop` artifact
   - task: PublishPipelineArtifact@1
@@ -44,7 +45,9 @@ steps:
   # Download the `drop` artifact in the following steps
   - task: DownloadPipelineArtifact@2
     inputs:
-      artifact: 'drop'
+      artifactName: 'drop'  # Name of the artifact to download
+      targetPath: $(Pipeline.Workspace)  # Location to download the artifact
+    displayName: 'Download Artifact'
 
   # Deploy to Azure Web App
   - task: AzureWebApp@1
@@ -53,3 +56,4 @@ steps:
       appName: $(AZURE_WEBAPP_NAME)
       resourceGroupName: $(AZURE_RESOURCE_GROUP)
       package: $(Pipeline.Workspace)/drop
+    displayName: 'Deploy to Azure Web App'
