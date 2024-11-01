@@ -1,29 +1,60 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- main
+  branches:
+    include:
+      - main
 
-resources:
-- repo: self
+pool:
+  vmImage: 'ubuntu-latest'
 
 variables:
-  tag: '$(Build.BuildId)'
+  AZURE_WEBAPP_NAME: 'Nisum'          # The name of your Azure Web App
+  AZURE_RESOURCE_GROUP: 'Drupal'      # Your Resource Group
+  AZURE_SERVICE_CONNECTION: 'NisumAzureConnection' # Your Service Connection
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/vendor/drush/drush/.ddev/web-build/Dockerfile'
-        tags: |
-          $(tag)
+steps:
+  # Add repository for PHP 8.2 and install PHP 8.2 packages along with required extensions
+  - script: |
+      sudo add-apt-repository ppa:ondrej/php -y
+      sudo apt-get update
+      sudo apt-get install -y php8.2 php8.2-cli php8.2-mbstring php8.2-xml php8.2-gd php8.2-zip php8.2-curl php8.2-intl
+    displayName: 'Install PHP 8.2 with required extensions'
+
+  # Check the installed PHP version
+  - script: |
+      php --version
+    displayName: 'Check PHP Version'
+
+  # Install Composer dependencies and create artifact in drop directory
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        mkdir -p drop  # Create the drop directory for the artifact
+        echo "Installing Composer dependencies..."
+        composer install --no-interaction --prefer-dist --optimize-autoloader
+        shopt -s extglob  # Enable extended globbing for selective copying
+        cp -r !(drop) drop/  # Copy all files except 'drop' directory itself to 'drop' folder
+    displayName: 'Install Composer Dependencies and Prepare Artifact'
+
+  # Publish the `drop` artifact
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'drop'  # Path to the artifact directory
+      artifact: 'drop'
+    displayName: 'Publish Artifact'
+
+  # Download the `drop` artifact in the following steps
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifactName: 'drop'  # Name of the artifact to download
+      targetPath: '$(Pipeline.Workspace)/drop'  # Location to download the artifact
+    displayName: 'Download Artifact'
+
+  # Deploy to Azure Web App
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: $(AZURE_SERVICE_CONNECTION)
+      appName: $(AZURE_WEBAPP_NAME)
+      resourceGroupName: $(AZURE_RESOURCE_GROUP)
+      package: '$(Pipeline.Workspace)/drop'  # Adjust the path to where the artifact was downloaded
+    displayName: 'Deploy to Azure Web App'
