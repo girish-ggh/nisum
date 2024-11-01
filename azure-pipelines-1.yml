@@ -32,7 +32,8 @@ steps:
         mkdir -p drop  # Create the drop directory for the artifact
         echo "Installing Composer dependencies..."
         composer install --no-interaction --prefer-dist --optimize-autoloader
-        mv * drop/  # Move all project files to the drop directory for deployment
+        shopt -s extglob  # Enable extended globbing for selective copying
+        cp -r !(drop) drop/  # Copy all files except 'drop' directory itself to 'drop' folder
     displayName: 'Install Composer Dependencies and Prepare Artifact'
 
   # Publish the `drop` artifact
