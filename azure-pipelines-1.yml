@@ -8,7 +8,7 @@ pool:
 
 variables:
   AZURE_WEBAPP_NAME: 'Nisum'          # The name of your Azure Web App
-  AZURE_RESOURCE_GROUP: 'Drupal'   # Your Resource Group
+  AZURE_RESOURCE_GROUP: 'Drupal'      # Your Resource Group
   AZURE_SERVICE_CONNECTION: 'NisumAzureConnection' # Your Service Connection
 
 steps:
@@ -22,17 +22,29 @@ steps:
       php --version
     displayName: 'Check PHP Version'
 
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      artifact: 'drop'
-
+  # Step to install Composer dependencies and create the `drop` directory
   - task: Bash@3
     inputs:
       targetType: 'inline'
       script: |
+        mkdir -p drop  # Create a directory for the artifact
         echo "Installing Composer dependencies..."
         composer install --no-interaction --prefer-dist --optimize-autoloader
+    displayName: 'Install Composer Dependencies'
 
+  # Publish the `drop` artifact
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'drop'  # Path to the artifact directory
+      artifact: 'drop'
+    displayName: 'Publish Artifact'
+
+  # Download the `drop` artifact in the following steps
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: 'drop'
+
+  # Deploy to Azure Web App
   - task: AzureWebApp@1
     inputs:
       azureSubscription: $(AZURE_SERVICE_CONNECTION)
