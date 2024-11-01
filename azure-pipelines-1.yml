@@ -13,16 +13,16 @@ variables:
 
 steps:
   - script: |
-      echo "Installing PHP 8.1..."
+      echo "Installing PHP 8.2..."
       sudo apt-get update
-      sudo apt-get install -y php8.1 php8.1-cli php8.1-mbstring php8.1-xml
-    displayName: 'Install PHP 8.1'
+      sudo apt-get install -y php8.2 php8.2-cli php8.2-mbstring php8.2-xml
+    displayName: 'Install PHP 8.2'
 
   - script: |
       php --version
     displayName: 'Check PHP Version'
 
-  # Step to install Composer dependencies and create the `drop` directory
+  # Install Composer dependencies
   - task: Bash@3
     inputs:
       targetType: 'inline'
