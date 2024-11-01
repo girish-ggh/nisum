@@ -47,7 +47,7 @@ steps:
   - task: DownloadPipelineArtifact@2
     inputs:
       artifactName: 'drop'  # Name of the artifact to download
-      targetPath: $(Pipeline.Workspace)  # Location to download the artifact
+      targetPath: '$(Pipeline.Workspace)/drop'  # Location to download the artifact
     displayName: 'Download Artifact'
 
   # Deploy to Azure Web App
@@ -56,5 +56,5 @@ steps:
       azureSubscription: $(AZURE_SERVICE_CONNECTION)
       appName: $(AZURE_WEBAPP_NAME)
       resourceGroupName: $(AZURE_RESOURCE_GROUP)
-      package: $(Pipeline.Workspace)/drop
+      package: '$(Pipeline.Workspace)/drop'  # Adjust the path to where the artifact was downloaded
     displayName: 'Deploy to Azure Web App'
