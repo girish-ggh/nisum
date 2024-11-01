@@ -13,10 +13,10 @@ variables:
 
 steps:
   - script: |
-      echo "Installing PHP 8.3..."
+      echo "Installing PHP 8.1..."
       sudo apt-get update
-      sudo apt-get install -y php8.3 php8.3-cli php8.3-mbstring php8.3-xml
-    displayName: 'Install PHP 8.3'
+      sudo apt-get install -y php8.1 php8.3-cli php8.1-mbstring php8.1-xml
+    displayName: 'Install PHP 8.1'
 
   - script: |
       php --version
